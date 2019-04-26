@@ -1,37 +1,33 @@
-package addDimension
+package rawImage2png
 
-// type Settings struct {
-// 	ASetting string `md:"aSetting,required"`
-// }
+import "os"
 
 type Input struct {
-	Data interface{} `md:"data"`
+	File interface{} `md:"file,required"`
 }
 
 func (r *Input) FromMap(values map[string]interface{}) error {
-	// strVal, _ := coerce.ToString(values["anInput"])
-	r.Data = values["data"]
+	r.File = values["file"].(*os.File)
 	return nil
 }
 
 func (r *Input) ToMap() map[string]interface{} {
 	return map[string]interface{}{
-		"data": r.Data,
+		"file": r.File,
 	}
 }
 
 type Output struct {
-	Output []interface{} `md:"output"`
+	OutFilePNG interface{} `md:"outFilePNG,required"`
 }
 
 func (o *Output) FromMap(values map[string]interface{}) error {
-	// strVal, _ := coerce.ToString()
-	o.Output = values["output"].([]interface{})
+	o.OutFilePNG = values["outFilePNG"]
 	return nil
 }
 
 func (o *Output) ToMap() map[string]interface{} {
 	return map[string]interface{}{
-		"output": o.Output,
+		"outFilePNG": o.OutFilePNG,
 	}
 }

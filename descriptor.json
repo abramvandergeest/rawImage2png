@@ -1,0 +1,21 @@
+{
+  "name": "rawImage2png",
+  "type": "flogo:activity",
+  "version": "0.0.1",
+  "title": "rawImage2png",
+  "description": "rawImage2png",
+  "homepage": "https://github.com/abramvandergeest/rawImage2png",
+  "input":[
+    {
+      "name": "file",
+      "type": "any",
+      "required": true
+    }
+  ],
+  "output": [
+    {
+      "name": "outFilePNG",
+      "type": "object"
+    }
+  ]
+}
