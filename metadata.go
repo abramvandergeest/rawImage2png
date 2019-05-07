@@ -18,11 +18,11 @@ func (r *Input) ToMap() map[string]interface{} {
 }
 
 type Output struct {
-	OutFilePNG interface{} `md:"outFilePNG,required"`
+	OutFilePNG []byte `md:"outFilePNG,required"`
 }
 
 func (o *Output) FromMap(values map[string]interface{}) error {
-	o.OutFilePNG = values["outFilePNG"]
+	o.OutFilePNG = values["outFilePNG"].([]byte)
 	return nil
 }
 

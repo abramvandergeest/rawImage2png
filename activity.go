@@ -45,7 +45,7 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 	// Saving raw file to disk
 	rand.Seed(time.Now().UnixNano())
 	rnum := rand.Intn(1000000)
-	fmt.Println(rnum)
+	fmt.Println("blah:",rnum)
 	writefilename := fmt.Sprintf("tmprawfile%06d", rnum)
 	ioutil.WriteFile(writefilename, buffer, 0777)
 
@@ -59,10 +59,12 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 	}
 
 	// Opening PNG file to pass on
-	pngf, err := os.Open(writefilename + ".png") // For read access.
+	pngf,err:=ioutil.ReadFile(writefilename + ".png")
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	ctx.Logger().Infof("file %q is open as []byte.", writefilename + ".png")
 
 	// Cleaning up files
 	cmd = "rm"
