@@ -1,13 +1,13 @@
 package rawImage2png
 
-import "os"
+// import "os"
 
 type Input struct {
 	File interface{} `md:"file,required"`
 }
 
 func (r *Input) FromMap(values map[string]interface{}) error {
-	r.File = values["file"].(*os.File)
+	r.File = values["file"].(string)
 	return nil
 }
 
