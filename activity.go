@@ -5,11 +5,13 @@ import (
 	"io/ioutil"
 	"log"
 	"math/rand"
+
 	// "os"
 	"os/exec"
 	"time"
 
 	"github.com/project-flogo/core/activity"
+	"github.com/project-flogo/core/data/coerce"
 )
 
 func init() {
@@ -30,13 +32,14 @@ func (a *Activity) Metadata() *activity.Metadata {
 // Eval implements api.Activity.Eval - Logs the Message
 func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 	// Reading in a raw image file
-	fileContents,_ := ctx.GetInput("file").(string)
 
-    if fileContents == "" {
-        return true, activity.NewError("File content must not be empty", "", nil)
-    }
+	fileContents := ctx.GetInput("file")
 
-	buffer := []byte(fileContents)
+	if fileContents == "" {
+		return true, activity.NewError("File content must not be empty", "", nil)
+	}
+	msg, _ := coerce.ToString(fileContents)
+	buffer := []byte(msg)
 
 	// Saving raw file to disk
 	rand.Seed(time.Now().UnixNano())
@@ -55,12 +58,12 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 	}
 
 	// Opening PNG file to pass on
-	pngf,err:=ioutil.ReadFile(writefilename + ".png")
+	pngf, err := ioutil.ReadFile(writefilename + ".png")
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	ctx.Logger().Infof("file %q is open as []byte.", writefilename + ".png")
+	ctx.Logger().Infof("file %q is open as []byte.", writefilename+".png")
 
 	// Cleaning up files
 	cmd = "rm"
